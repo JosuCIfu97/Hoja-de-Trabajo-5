@@ -1,23 +1,23 @@
 # -*- coding: cp1252 -*-
 #Universidad del Valle de Guatemala
 #Algoritmos y Estructuras de Datos
-#Sección 20
-#Josué Cifuentes 15275
-#Pablo Muñoz 15258
+#SecciÃ³n 20
+#JosuÃ© Cifuentes 15275
+#Pablo MuÃ±oz 15258
 #30/08/16
 #Hoja de Trabajo No. 5
-#El código se basó en los ejemplos de clase y de blackboard
+#El cÃ³digo se basÃ³ en los ejemplos de clase y de blackboard
 
 import simpy
 import random
 
-#Método de simulación
+#MÃ©todo de simulaciÃ³n
 #env: environment de simpy
 #name: nombre del proceso:
 #time: tiempo que toma cada "event"
 #ram: Memoria en uso
-#memory: Capacidad máxima de memoria
-#instructions: Número de instrucciones por el proceso.
+#memory: Capacidad mÃ¡xima de memoria
+#instructions: NÃºmero de instrucciones por el proceso.
 #speed: velocidad del procesador (instrucciones/unidad de tiempo)
 def proceso(env, name, time, ram, memory, instructions, speed):
     global times
@@ -34,20 +34,20 @@ def proceso(env, name, time, ram, memory, instructions, speed):
     #Almacenamiento de instrucciones terminadas.
     completed = 0
     while completed < instructions: #Deben haber instrucciones sin terminar para trabajar con el proceso
-        #Conexión con CPU
+        #ConexiÃ³n con CPU
         with cpu.request() as r:
-            yield r #Espera al que el Resource del CPU esté disponible
+            yield r #Espera al que el Resource del CPU estÃ© disponible
             if speed <= (instructions - completed):
-                running = speed #El máximo de instrucciones que pueden ejecutarse depende de la velocidad del procesador (3 en este caso).
+                running = speed #El mÃ¡ximo de instrucciones que pueden ejecutarse depende de la velocidad del procesador (3 en este caso).
             else:
                 running = instructions - completed
 
-            print ('tiempo %f : %s (READY) se ejecutarán %d instrucciones' % (env.now, name, running))
-            yield env.timeout(running/speed) #máximo 1 unidad de tiempo para realizar las instrucciones.
-            completed += running #Ya ejecutó las instrucciones el CPU.
+            print ('tiempo %f : %s (READY) se ejecutarÃ¡n %d instrucciones' % (env.now, name, running))
+            yield env.timeout(running/speed) #mÃ¡ximo 1 unidad de tiempo para realizar las instrucciones.
+            completed += running #Ya ejecutÃ³ las instrucciones el CPU.
             print ('tiempo %f: %s (RUNNING) instrucciones (%d/%d) completadas.' % (env.now, name, completed, instructions))
 
-            #Decisión del procesador si poner demás instrucciones en espera o listas.
+            #DecisiÃ³n del procesador si poner demÃ¡s instrucciones en espera o listas.
             decision = random.randint(1,2)
             if decision ==1 and completed < instructions: #Ya se ejecutaron nuevas instrucciones por lo que debe valuarse que no se hayan completado todas ya.
                 with wait.request() as w:
@@ -64,9 +64,9 @@ def proceso(env, name, time, ram, memory, instructions, speed):
 
 #VARIABLES
 speed = 3.0 #instrucciones/unidad de tiempo
-total_memory = 100 #Cantidad total (máxima) de memoria ram disponible.
+total_memory = 100 #Cantidad total (mÃ¡xima) de memoria ram disponible.
 processes = 25 #Procesos totales a ejecutar
-times = [] #Lista que contendrá todos los tiempos
+times = [] #Lista que contendrÃ¡ todos los tiempos
 interval = 1
 
 env = simpy.Environment()
@@ -85,7 +85,7 @@ for i in range(processes):
     
 env.run()
 
-#Tiempo total y desviación estándar
+#Tiempo total y desviaciÃ³n estÃ¡ndar
 sumatoria = 0
 for i in times:
     sumatoria = sumatoria + i
@@ -98,6 +98,6 @@ s = (sumdesv/(processes-1))**0.5
 
 print ""
 print ('El tiempo promedio es %f' %(prom))
-print ("La desviació estándar es %f" % (s))
-
+print ("La desviaciÃ³ estÃ¡ndar es %f" % (s))
+print("Gracias por usar la simulacion")
             
